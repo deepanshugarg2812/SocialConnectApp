@@ -3,6 +3,7 @@ from main import models
 from authapp.serializers import UserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
+    username = UserSerializer(read_only=True)
     class Meta:
         fields = '__all__'
         model = models.Post

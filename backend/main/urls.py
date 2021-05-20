@@ -7,4 +7,9 @@ urlpatterns = [
     path('comment',views.commentPost),
     path('getComments',views.getComments),
     path('getLikes',views.getLikes),
+    path('getPosts',views.getPost),
+    path('getPostspk',views.getParticularPost),
+    path('deleteParticularPost',views.deleteParticularPost),
+    path('deleteParticularLike',views.deleteParticularLike),
+    path('getUserDetails',views.getUserDetails)
 ]

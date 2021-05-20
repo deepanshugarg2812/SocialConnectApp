@@ -4,4 +4,4 @@ from authapp import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserModel
-        fields = '__all__'
+        fields = ['username', 'firstName','lastName','age','gender']
