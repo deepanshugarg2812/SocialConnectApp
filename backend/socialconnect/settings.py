@@ -8,6 +8,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*',]
 
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5500']
+
 INSTALLED_APPS = [
     'main',
     'authapp',
@@ -18,9 +20,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

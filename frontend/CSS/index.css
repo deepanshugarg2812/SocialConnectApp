@@ -1,0 +1,17 @@
+body{
+    background-image: linear-gradient(to right , yellow,blue)
+}
+
+nav{
+    text-align: center;
+}
+
+.stack1{
+    margin-top: 50px;
+    border-top: 1px solid black;
+}
+
+.stack11{
+    text-align: center;
+    padding : 20px;
+}

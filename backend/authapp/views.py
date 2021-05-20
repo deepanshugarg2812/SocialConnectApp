@@ -43,7 +43,7 @@ def loginApi(request):
                 return Response(j.data)
             except:
                 user = {
-                    'message' : "Invalid username or password"
+                    'message' : "Invalid username or password"        
                 }
                 return Response(user)
     except:
