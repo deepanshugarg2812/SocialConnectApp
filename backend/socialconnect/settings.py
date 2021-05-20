@@ -9,6 +9,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*',]
 
 INSTALLED_APPS = [
+    'main',
     'authapp',
     'rest_framework',
     'django.contrib.admin',
@@ -99,3 +100,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME' : 'deepu2812-company',
+    'API_KEY' : '671636529784696',
+    'API_SECRET' : 'Cw5X90P2xyH-EH5MwiWVAajqqaY',
+}
