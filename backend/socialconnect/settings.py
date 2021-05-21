@@ -1,10 +1,11 @@
 import os
+from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = '@n#%t#+ss&58gydx!a0_5&a@87w)51v3a+b3grwuo#w0h9!td&'
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*',]
 
@@ -109,7 +110,7 @@ MEDIA_URL = '/images/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME' : 'deepu2812-company',
-    'API_KEY' : '671636529784696',
-    'API_SECRET' : 'Cw5X90P2xyH-EH5MwiWVAajqqaY',
+    'CLOUD_NAME' : config('CLOUD_NAME'),
+    'API_KEY' : config('API_KEY'),
+    'API_SECRET' : config('API_SECRET'),
 }
