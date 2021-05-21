@@ -20,3 +20,8 @@ class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ['username']
         model = models.Comment
+
+class FriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = models.Friends

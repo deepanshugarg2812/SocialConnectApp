@@ -190,14 +190,129 @@ def getUserDetails(request):
         j = serializers.UserSerializer(user)
         return Response(j.data)
     except Exception as e:
-        print(e)
         resp = {
             'message' : 'Sorry, server error'
         }
         return Response(resp)
 
 ##Show friends
+@api_view(['POST'])
+def getFriends(request):
+    try:
+        user = models.UserModel.objects.get(username=request.POST['username']) ##Find user object
+        obj = models.Friends.objects.filter(user1 = user,areFriends=True)
+        print(obj)
+        j = serializers.FriendsSerializer(data = obj,many=True)
+        if not j.is_valid():
+            return Response(j.data)
+        else:
+            print(j.errors)
+            resp = {
+            'message' : 'Sorry,you have no friends'
+        }
+        return Response(resp)
+    except Exception as e:
+        print(e)
+        resp = {
+            'message' : 'Sorry, server error'
+        }
+        return Response(resp)
+
+##Find people 
+@api_view(['POST'])
+def findFriends(request):
+    try:
+        user = models.UserModel.objects.get(username=request.POST['username']) ##Find user object
+        allUsers = models.UserModel.objects.all()
+        obj = models.Friends.objects.values('user2')
+
+        useridnotfriends = []
+        for u in allUsers:
+            useridnotfriends.append(u.id)
+        for u in obj:
+            useridnotfriends.remove(u.get('user2'))
+        
+        userLis = []
+        for i in useridnotfriends:
+            userobj = models.UserModel.objects.get(pk=i)
+            userLis.append(userobj)
+        print(userLis)
+        
+        j = UserSerializer(data = userLis,many=True)
+        if not j.is_valid():
+            return Response(j.data)
+        else:
+            resp = {
+                'message' : 'Sorry,you have no suggestions'
+            }
+            return Response(resp)
+    except Exception as e:
+        print(e)
+        resp = {
+            'message' : 'Sorry, server error'
+        }
+        return Response(resp)
 
 ## Send friend request
+@api_view(['POST'])
+def sendFriends(request):
+    try:
+        user1 = models.UserModel.objects.get(username=request.POST['username1']) ##Find user object
+        user2 = models.UserModel.objects.get(username=request.POST['username2'])
+
+        qs1 = models.Friends.objects.filter(user1=user1, user2=user2)
+        qs2 = models.Friends.objects.filter(user2=user1, user1=user2)
+        if len(qs1)==0 and len(qs2)==0:
+            obj1 = models.Friends.objects.create(user1=user1, user2=user2,areFriends=False)
+            obj1.save()
+            obj2 = models.Friends.objects.create(user1=user2, user2=user1,areFriends=False)
+            obj2.save()
+            resp = {
+                'message' : 'friend request sent'
+            }
+            return Response(resp)
+        else:
+            resp = {
+                'message' : 'You are already friends or have sent friend request'
+            }
+            return Response(resp)
+    except Exception as e:
+        print(e)
+        resp = {
+            'message' : 'Sorry, server error'
+        }
+        return Response(resp)
 
 ## Accept friend request
+@api_view(['POST'])
+def acceptFriends(request):
+    try:
+        user1 = models.UserModel.objects.get(username=request.POST['username1']) ##Find user object
+        user2 = models.UserModel.objects.get(username=request.POST['username2'])
+
+        qs1 = models.Friends.objects.filter(user1=user1, user2=user2,areFriends=True)
+        qs2 = models.Friends.objects.filter(user1=user2, user2=user1,areFriends=True)
+        if len(qs1)==0 and len(qs2)==0:
+            objold1 = models.Friends.objects.get(user1=user1, user2=user2)
+            objold1.delete()
+            objold2 = models.Friends.objects.get(user1=user2, user2=user1)
+            objold2.delete()
+            obj1 = models.Friends.objects.create(user1=user1, user2=user2,areFriends=True)
+            obj1.save()
+            obj2 = models.Friends.objects.create(user1=user2, user2=user1,areFriends=True)
+            obj2.save()
+            resp = {
+                'message' : 'friend request sent'
+            }
+            return Response(resp)
+        else:
+            resp = {
+                'message' : 'You are already friends'
+            }
+            return Response(resp)
+    except Exception as e:
+        print(e)
+        resp = {
+            'message' : 'Sorry, server error'
+        }
+        return Response(resp)

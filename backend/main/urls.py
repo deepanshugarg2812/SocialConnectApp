@@ -11,5 +11,9 @@ urlpatterns = [
     path('getPostspk',views.getParticularPost),
     path('deleteParticularPost',views.deleteParticularPost),
     path('deleteParticularLike',views.deleteParticularLike),
-    path('getUserDetails',views.getUserDetails)
+    path('getUserDetails',views.getUserDetails),
+    path('getFriends',views.getFriends),
+    path('sendFriends',views.sendFriends),
+    path('acceptFriends',views.acceptFriends),
+    path('findFriends',views.findFriends),
 ]
