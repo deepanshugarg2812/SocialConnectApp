@@ -108,7 +108,8 @@ def getLikes(request):
 @api_view(['POST'])
 def getPost(request):
     try:
-        obj = models.Post.objects.all()
+        user = models.UserModel.objects.get(username=request.POST['username'])
+        obj = models.Post.objects.exclude(username=user)
         serializedDataObj = serializers.PostSerializer(data = obj,many=True)
         if not serializedDataObj.is_valid():
             print(serializedDataObj.errors)

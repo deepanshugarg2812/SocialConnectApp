@@ -16,7 +16,7 @@ window.onload = () => {
         }
 
         $.post('http://127.0.0.1:8000/auth_api/login',obj,(response) => {
-            if(response.id==null || response.id==undefined){
+            if(response.username==null || response.username==undefined){
                 alert("Invalid username or password");
             }
             else{
